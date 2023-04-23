@@ -35,7 +35,10 @@ namespace WordMatrixHelper
         private string EncodeMatrix(decimal[,] matrix)
         {
             var wordFormat = new StringBuilder();
-            wordFormat.Append("[■(");
+            if (checkBox1.Checked)
+                wordFormat.Append("[");
+
+            wordFormat.Append("■(");
             for (var y = 0; y < matrix.GetLength(0); y++)
             {
                 if (y > 0)
@@ -49,8 +52,10 @@ namespace WordMatrixHelper
                     wordFormat.Append(matrix[y,x]);
                 }
             }
+            wordFormat.Append(")");
+            if (checkBox1.Checked)
+                wordFormat.Append("]");
 
-            wordFormat.Append(")]");
             return wordFormat.ToString();
         }
 
@@ -283,6 +288,11 @@ namespace WordMatrixHelper
                     matrix[y, x] = RoundToSignificantDigits(matrix[y, x], sigFigs);
 
             outputTextBox.Text = EncodeMatrix(matrix);
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            outputTextBox.Text = EncodeMatrix(ParseMatrix(outputTextBox.Text));
         }
     }
 }

@@ -154,6 +154,18 @@ namespace WordMatrixHelper
             var a = ParseMatrix(textBox1.Text);
             var b = ParseMatrix(textBox2.Text);
 
+            if (b.Length == 1)
+            {
+                var matrix1 = new decimal[a.GetLength(0), a.GetLength(1)];
+
+                for (var y = 0; y < a.GetLength(0); y++)
+                    for (var x = 0; x < a.GetLength(1); x++)
+                        matrix1[y, x] = a[y, x] * b[0, 0];
+
+                outputTextBox.Text = EncodeMatrix(matrix1);
+                return;
+            }
+
             var matrix = new decimal[a.GetLength(0), b.GetLength(1)];
 
             for (var y = 0; y < a.GetLength(0); y++)
